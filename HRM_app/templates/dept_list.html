@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    {% if request.user.is_staff or request.user.is_superuser %}
+        <a href="{% url 'create_dept' %}" class="btn btn-success">Create Department</a>
+    {% endif %}
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sr.No</th>
+            <th>Department Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            {% if request.user.is_staff or request.user.is_superuser %}
+                <th>Edit</th>
+                <th>Deactivate</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for dept in depts %}
+            {% if dept.status %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ dept.dept_name }}</td>
+                    <td>{{ dept.description }}</td>
+                    <td>
+                        {% if dept.status %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-danger">Inactive</span>
+                        {% endif %}
+                    </td>
+                    {% if request.user.is_staff or request.user.is_superuser %}
+                        <td><a href="{% url 'dept_update' dept.id %}" class="btn btn-warning">Edit</a></td>
+                        <td>
+                            <a href="{% url 'dept_delete' dept.id %}" 
+                               class="btn btn-danger" 
+                               onclick="return confirm('Warning: Deactivating this department will make it unavailable for employees. Please reassign them before proceeding. Do you want to continue?');">
+                                Delete
+                            </a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
