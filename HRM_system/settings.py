@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@iqa104&olch#^@af)%=b6!)aj6v1$w1-dt-ep+g%!(5(md9&k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'HRM_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hrm_system',
-        'USER':'root',
-        'PASSWORD':'Dhruvtiger@1708',
-        'HOST':'localhost',
-        'PORT':'3306',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hrm_system_ihi2',
+        'USER':'hrm_system_ihi2_user',
+        'PASSWORD':'CwM5bVbzZnVnIKCjmjT98HFQtshy79Rw',
+        'HOST':'dpg-cuft4n1opnds73b8n8g0-a',
+        'PORT':'5432',
     }
 }
 
@@ -120,7 +120,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -130,5 +132,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'HRM_app.HRM_Users'
 
 
-LOGIN_REDIRECT_URL = '/dept_list/'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
