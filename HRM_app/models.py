@@ -3,19 +3,14 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class HRM_Users(AbstractUser):
-    fname = models.CharField(max_length=100,validators=[RegexValidator(regex=r'^[a-zA-Z\s]+$',)])
-    lname = models.CharField(max_length=100,validators=[RegexValidator(regex=r'^[a-zA-Z\s]+$',)])
-    email1 = models.EmailField(unique=True)
-    groups = models.ManyToManyField(
-        "auth.Group",
-        related_name="hrm_users_groups",
-        blank=True
-    )
-    user_permissions = models.ManyToManyField(
-        "auth.Permission",
-        related_name="hrm_users_permissions",
-        blank=True
-    )
+    role = models.CharField(max_length=100)
+    description = models.CharField(max_length=300)
+
+    # Disable password for regular users
+    def save(self, *args, **kwargs):
+        if not self.is_superuser:  # Only allow password for admins
+            self.set_unusable_password()  # Prevents login
+        super().save(*args, **kwargs)
     
 class Department(models.Model):
     dept_name = models.CharField(max_length=100,validators=[RegexValidator(regex=r'^[a-zA-Z\s]+$',

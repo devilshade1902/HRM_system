@@ -1,17 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<div>
-    {% if request.user.is_staff or request.user.is_superuser %}
-        <a href="{% url 'create_dept' %}" class="btn btn-success">Create Department</a>
-    {% endif %}
-</div>
 
 <table class="table">
     <thead>
         <tr>
             <th>Sr.No</th>
-            <th>Department Name</th>
-            <th>Description</th>
+            <th>Role Name</th>
+            <th>Role description</th>
             <th>Status</th>
             {% if request.user.is_staff or request.user.is_superuser %}
                 <th>Edit</th>
@@ -20,25 +15,25 @@
         </tr>
     </thead>
     <tbody>
-        {% for dept in depts %}
+        {% for user in users %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ dept.dept_name }}</td>
-                <td>{{ dept.description }}</td>
+                <td>{{ user.role }}</td>
+                <td>{{user.description}}</td>
                 <td>
-                    {% if dept.status %}
+                    {% if user.is_active %}
                         <span class="badge bg-success">Active</span>
                     {% else %}
                         <span class="badge bg-danger">Inactive</span>
                     {% endif %}
                 </td>
                 {% if request.user.is_staff or request.user.is_superuser %}
-                    <td><a href="{% url 'dept_update' dept.id %}" class="btn btn-warning">Edit</a></td>
+                    <td><a href="{% url 'edit_user' user.id%}" class="btn btn-warning">Edit</a></td>
                     <td>
-                        <a href="{% url 'dept_delete' dept.id %}" 
+                        <a href="{% url 'deactivate_user' user.id%}" 
                            class="btn btn-danger" 
-                           onclick="return confirm('Warning: Deactivating this department will make it unavailable for employees. Please reassign them before proceeding. Do you want to continue?');">
-                            Deactivate
+                           onclick="return confirm('Warning: Deactivating this user will prevent them from logging in. Are you sure?');">
+                            Delete
                         </a>
                     </td>
                 {% endif %}

@@ -80,9 +80,11 @@
                 {% if user.is_authenticated %}
                     {% if user.is_staff or user.is_superuser %}
                         <a href="{% url 'user_create' %}" class="btn btn-outline-light me-3">
-                            <i class="bi bi-person-plus"></i> Create User
+                            <i class="bi bi-person-plus"></i> Create Role
                         </a>
-                    {% endif %}
+                        {% endif %}
+                        <a href="{% url 'dept_list'%}" class="btn btn-outline-light me-3">Departments</a>
+                        <a href="{% url 'user_list'%}" class="btn btn-outline-light me-3">Roles</a>
                     
                     <span class="welcome-text">Hello, {{ user.username }}</span>
                     <form action="{% url 'logout' %}" method="post">

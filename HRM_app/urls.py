@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import DeptCreateView,DeptList,DeptDetailView,soft_delete_department,UserCreate
+from .views import DeptCreateView,DeptList,DeptDetailView,soft_delete_department,UserCreate,UserList,edit_user,deactivate_user
 from django.contrib.auth.views import LoginView , LogoutView 
 
 urlpatterns = [
@@ -11,4 +11,7 @@ urlpatterns = [
     path('user_create/',UserCreate,name='user_create'),
     path('login/',LoginView.as_view(template_name='login.html'),name='login'),
     path('logout/',LogoutView.as_view(),name='logout'),
+    path('user_list',UserList.as_view(),name='user_list'),
+     path('user_update/<int:pk>/', edit_user, name='edit_user'),
+    path('user_delete/<int:pk>/', deactivate_user, name='deactivate_user'),
 ]
